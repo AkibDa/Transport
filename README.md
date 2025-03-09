@@ -1,6 +1,6 @@
 # Transport System
 
-# Overview
+## Overview
 
 This is a simple Public Transport System implemented in Python. It allows users to:
 
@@ -14,7 +14,7 @@ This is a simple Public Transport System implemented in Python. It allows users 
 
 The system manages multiple buses and keeps track of seat availability dynamically.
 
-# Features
+## Features
 
 * View Routes: Displays all available bus routes along with seat availability and fare details.
 
@@ -24,11 +24,11 @@ The system manages multiple buses and keeps track of seat availability dynamical
 
 * Fare Estimation: Users can calculate the total fare based on the number of seats they want to book.
 
-# Installation & Usage
+## Installation & Usage
 
 * Requirements - Python 3.x
 
-# Clone the repository:
+## Clone the repository:
 ```
 git clone https://github.com/AkibDa/Transport.git
 cd Transport
@@ -40,7 +40,7 @@ python transport.py
 
 Follow the on-screen prompts to interact with the transport system.
 
-# Code Structure
+## Code Structure
 
 Bus Class: Represents a bus, stores details like route, seats, and fare.
 
@@ -48,7 +48,7 @@ TransportSystem Class: Manages multiple buses and provides functionalities.
 
 main() Function: Runs the CLI-based transport system.
 
-# Example Usage
+## Example Usage
 
 Public Transport System
 1. View Available Routes
@@ -63,12 +63,12 @@ Available Bus Routes:
 102: Route B: Downtown to Mall (Seats: 30/30, Fare: Rs7)
 103: Route A: Train Station to University (Seats: 35/35, Fare: Rs8)
 
-# Contributing
+## Contributing
 
 Feel free to contribute by submitting issues or pull requests. Let's improve the system together!
 
-# License
+## License
 
 This project is licensed under the MIT License.
 
-Created by Sk Akib Ahammed [ahammedskakib@gmail.com]
+# Created by Sk Akib Ahammed [ahammedskakib@gmail.com]
