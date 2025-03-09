@@ -26,11 +26,7 @@ The system manages multiple buses and keeps track of seat availability dynamical
 
 # Installation & Usage
 
-* Requirements
-
-Python 3.x
-
-Running the Program
+* Requirements - Python 3.x
 
 # Clone the repository:
 ```
