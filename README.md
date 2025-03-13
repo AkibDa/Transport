@@ -35,8 +35,9 @@ cd Transport
 ```
 
 Run the Python script:
-
+```
 python transport.py
+```
 
 Follow the on-screen prompts to interact with the transport system.
 
