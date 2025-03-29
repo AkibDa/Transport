@@ -57,6 +57,52 @@ def check_bus():
         'fare_per_seat': bus.fare
     })
 
+# All API endpoints in app.py
+@app.route('/api/routes')
+def get_routes():
+    buses = []
+    for bus in system.buses:
+        buses.append({
+            'bus_id': bus.bus_id,
+            'route': bus.route,
+            'available_seats': bus.available_seats,
+            'total_seats': bus.total_seats,
+            'fare': bus.fare
+        })
+    return jsonify(buses)
+
+@app.route('/api/check_bus', methods=['POST'])
+def check_bus():
+    bus_id = int(request.json.get('bus_id'))
+    bus = system.get_bus(bus_id)
+    if not bus:
+        return jsonify({'error': 'Invalid Bus ID'}), 404
+    
+    return jsonify({
+        'bus_id': bus.bus_id,
+        'route': bus.route,
+        'available_seats': bus.available_seats,
+        'fare_per_seat': bus.fare
+    })
+
+@app.route('/api/book', methods=['POST'])
+def book():
+    bus_id = int(request.json.get('bus_id'))
+    num_seats = int(request.json.get('num_seats'))
+    
+    bus = system.get_bus(bus_id)
+    if not bus:
+        return jsonify({'error': 'Invalid Bus ID'}), 404
+    
+    if num_seats > bus.available_seats:
+        return jsonify({'error': 'Not enough seats available'}), 400
+    
+    fare = bus.get_fare(num_seats)
+    return jsonify({
+        'fare': fare,
+        'available_seats': bus.available_seats
+    })
+
 @app.route('/api/book', methods=['POST'])
 def book():
     bus_id = int(request.json.get('bus_id'))

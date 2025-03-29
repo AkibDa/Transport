@@ -2,6 +2,9 @@ document.addEventListener('DOMContentLoaded', function() {
   // Current booking state
   let currentBus = null;
   
+  // Load available buses when page loads
+  loadAvailableBuses();
+  
   // Step 1: Check Bus Availability
   document.getElementById('check-bus-form').addEventListener('submit', function(e) {
       e.preventDefault();
@@ -34,7 +37,7 @@ document.addEventListener('DOMContentLoaded', function() {
       .catch(error => {
           const errorDiv = document.createElement('div');
           errorDiv.className = 'error-message';
-          errorDiv.textContent = error.error || 'Error checking bus availability';
+          errorDiv.textContent = error.error || 'Error checking bus availability. Please check the Bus ID.';
           document.getElementById('check-bus-form').appendChild(errorDiv);
       });
   });
@@ -52,7 +55,12 @@ document.addEventListener('DOMContentLoaded', function() {
       const numSeats = document.getElementById('num-seats').value;
       
       if (!currentBus) {
-          showError('No bus selected');
+          showError('No bus selected. Please go back and select a bus.');
+          return;
+      }
+      
+      if (numSeats <= 0) {
+          showError('Please enter a valid number of seats.');
           return;
       }
       
@@ -82,7 +90,7 @@ document.addEventListener('DOMContentLoaded', function() {
           if (errorDiv) errorDiv.remove();
       })
       .catch(error => {
-          showError(error.error || 'Error calculating fare');
+          showError(error.error || 'Error calculating fare. Please try again.');
       });
   });
   
@@ -111,16 +119,19 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('step2').classList.add('hidden');
           document.getElementById('step3').classList.remove('hidden');
           document.getElementById('confirmation-message').innerHTML = `
-              <p><strong>Booking confirmed!</strong></p>
-              <p>Bus ID: ${currentBus.bus_id}</p>
-              <p>Route: ${currentBus.route}</p>
-              <p>Seats booked: ${numSeats}</p>
-              <p>Total fare: Rs${document.getElementById('total-fare').textContent}</p>
-              <p>Remaining seats: ${data.new_availability}</p>
+              <p><strong>✅ Booking confirmed!</strong></p>
+              <p><strong>Bus ID:</strong> ${currentBus.bus_id}</p>
+              <p><strong>Route:</strong> ${currentBus.route}</p>
+              <p><strong>Seats booked:</strong> ${numSeats}</p>
+              <p><strong>Total fare:</strong> Rs${document.getElementById('total-fare').textContent}</p>
+              <p><strong>Remaining seats:</strong> ${data.new_availability}</p>
           `;
+          
+          // Refresh the bus list to show updated availability
+          loadAvailableBuses();
       })
       .catch(error => {
-          showError(error.error || 'Error confirming booking');
+          showError(error.error || 'Error confirming booking. Please try again.');
       });
   });
   
@@ -136,6 +147,37 @@ document.addEventListener('DOMContentLoaded', function() {
       document.getElementById('step3').classList.add('hidden');
       document.getElementById('step1').classList.remove('hidden');
   });
+  
+  // Load available buses
+  function loadAvailableBuses() {
+      fetch('/api/routes')
+          .then(response => response.json())
+          .then(data => {
+              const busesList = document.getElementById('buses-list');
+              busesList.innerHTML = '';
+              
+              if (data.length === 0) {
+                  busesList.innerHTML = '<tr><td colspan="4">No buses available at the moment</td></tr>';
+                  return;
+              }
+              
+              data.forEach(bus => {
+                  const row = document.createElement('tr');
+                  row.innerHTML = `
+                      <td>${bus.bus_id}</td>
+                      <td>${bus.route}</td>
+                      <td>${bus.available_seats}/${bus.total_seats}</td>
+                      <td>${bus.fare}</td>
+                  `;
+                  busesList.appendChild(row);
+              });
+          })
+          .catch(error => {
+              console.error('Error loading buses:', error);
+              document.getElementById('buses-list').innerHTML = 
+                  '<tr><td colspan="4">Error loading bus information. Please refresh the page.</td></tr>';
+          });
+  }
   
   function showError(message) {
       // Remove any existing error messages
