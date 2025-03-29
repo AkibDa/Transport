@@ -3,63 +3,57 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Bus Transport System</title>
+    <title>Bus Ticket Booking</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
     <div class="container">
         <header>
-            <h1>Public Transport System</h1>
+            <h1>Bus Ticket Booking System</h1>
         </header>
 
         <main>
-            <section id="routes-section">
-                <h2>Available Bus Routes</h2>
-                <div id="routes-container">
-                    <!-- Routes will be loaded here by JavaScript -->
-                    <p>Loading routes...</p>
+            <!-- Step 1: Check Bus Availability -->
+            <section id="step1" class="active-step">
+                <h2>Step 1: Check Bus Availability</h2>
+                <form id="check-bus-form">
+                    <div class="form-group">
+                        <label for="bus-id">Enter Bus ID:</label>
+                        <input type="number" id="bus-id" required>
+                    </div>
+                    <button type="submit">Check Availability</button>
+                </form>
+                <div id="bus-info" class="hidden">
+                    <h3>Bus Information</h3>
+                    <p><strong>Route:</strong> <span id="bus-route"></span></p>
+                    <p><strong>Available Seats:</strong> <span id="bus-seats"></span></p>
+                    <p><strong>Fare per Seat:</strong> Rs<span id="bus-fare"></span></p>
+                    <button id="proceed-to-booking">Proceed to Booking</button>
                 </div>
             </section>
 
-            <div class="action-sections">
-                <section id="availability-section">
-                    <h2>Check Seat Availability</h2>
-                    <form id="availability-form">
-                        <label for="avail-bus-id">Bus ID:</label>
-                        <input type="number" id="avail-bus-id" required>
-                        <button type="submit">Check</button>
-                    </form>
-                    <div id="availability-result"></div>
-                </section>
-
-                <section id="book-section">
-                    <h2>Book Tickets</h2>
-                    <form id="book-form">
-                        <label for="book-bus-id">Bus ID:</label>
-                        <input type="number" id="book-bus-id" required>
-                        
+            <!-- Step 2: Book Tickets -->
+            <section id="step2" class="hidden">
+                <h2>Step 2: Book Tickets</h2>
+                <form id="booking-form">
+                    <div class="form-group">
                         <label for="num-seats">Number of Seats:</label>
                         <input type="number" id="num-seats" min="1" required>
-                        
-                        <button type="submit">Book</button>
-                    </form>
-                    <div id="book-result"></div>
-                </section>
+                    </div>
+                    <div id="fare-display" class="hidden">
+                        <p><strong>Total Fare:</strong> Rs<span id="total-fare">0</span></p>
+                    </div>
+                    <button type="submit">Calculate Fare</button>
+                    <button type="button" id="confirm-booking" class="hidden">Confirm Booking</button>
+                </form>
+            </section>
 
-                <section id="fare-section">
-                    <h2>Fare Estimation</h2>
-                    <form id="fare-form">
-                        <label for="fare-bus-id">Bus ID:</label>
-                        <input type="number" id="fare-bus-id" required>
-                        
-                        <label for="fare-num-seats">Number of Seats:</label>
-                        <input type="number" id="fare-num-seats" min="1" required>
-                        
-                        <button type="submit">Calculate</button>
-                    </form>
-                    <div id="fare-result"></div>
-                </section>
-            </div>
+            <!-- Step 3: Booking Confirmation -->
+            <section id="step3" class="hidden">
+                <h2>Booking Confirmation</h2>
+                <div id="confirmation-message"></div>
+                <button id="new-booking">Start New Booking</button>
+            </section>
         </main>
     </div>
 
