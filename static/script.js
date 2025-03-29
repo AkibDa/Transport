@@ -1,11 +1,8 @@
 document.addEventListener('DOMContentLoaded', function() {
-  // Current booking state
   let currentBus = null;
   
-  // Load available buses when page loads
   loadAvailableBuses();
   
-  // Step 1: Check Bus Availability
   document.getElementById('check-bus-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const busId = document.getElementById('bus-id').value;
@@ -30,7 +27,6 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('bus-fare').textContent = data.fare_per_seat;
           document.getElementById('bus-info').classList.remove('hidden');
           
-          // Clear any previous error
           const errorDiv = document.querySelector('#step1 .error-message');
           if (errorDiv) errorDiv.remove();
       })
@@ -42,14 +38,12 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
   
-  // Proceed to booking step
   document.getElementById('proceed-to-booking').addEventListener('click', function() {
       document.getElementById('step1').classList.add('hidden');
       document.getElementById('step2').classList.remove('hidden');
       document.getElementById('num-seats').focus();
   });
   
-  // Step 2: Calculate Fare and Book
   document.getElementById('booking-form').addEventListener('submit', function(e) {
       e.preventDefault();
       const numSeats = document.getElementById('num-seats').value;
@@ -85,7 +79,6 @@ document.addEventListener('DOMContentLoaded', function() {
           document.getElementById('fare-display').classList.remove('hidden');
           document.getElementById('confirm-booking').classList.remove('hidden');
           
-          // Clear any previous error
           const errorDiv = document.querySelector('#step2 .error-message');
           if (errorDiv) errorDiv.remove();
       })
@@ -94,7 +87,6 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
   
-  // Confirm booking
   document.getElementById('confirm-booking').addEventListener('click', function() {
       const numSeats = document.getElementById('num-seats').value;
       
@@ -115,7 +107,6 @@ document.addEventListener('DOMContentLoaded', function() {
           return response.json();
       })
       .then(data => {
-          // Show confirmation
           document.getElementById('step2').classList.add('hidden');
           document.getElementById('step3').classList.remove('hidden');
           document.getElementById('confirmation-message').innerHTML = `
@@ -127,7 +118,6 @@ document.addEventListener('DOMContentLoaded', function() {
               <p><strong>Remaining seats:</strong> ${data.new_availability}</p>
           `;
           
-          // Refresh the bus list to show updated availability
           loadAvailableBuses();
       })
       .catch(error => {
@@ -135,9 +125,7 @@ document.addEventListener('DOMContentLoaded', function() {
       });
   });
   
-  // Start new booking
   document.getElementById('new-booking').addEventListener('click', function() {
-      // Reset everything
       currentBus = null;
       document.getElementById('check-bus-form').reset();
       document.getElementById('booking-form').reset();
@@ -180,7 +168,6 @@ document.addEventListener('DOMContentLoaded', function() {
   }
   
   function showError(message) {
-      // Remove any existing error messages
       const existingError = document.querySelector('.error-message');
       if (existingError) existingError.remove();
       
