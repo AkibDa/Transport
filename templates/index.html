@@ -1,12 +1,68 @@
-{% extends "base.html" %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bus Transport System</title>
+    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Public Transport System</h1>
+        </header>
 
-{% block content %}
-    <h2>Welcome to the Bus Transport System</h2>
-    <p>Use the navigation menu above to:</p>
-    <ul>
-        <li>View available bus routes</li>
-        <li>Check seat availability</li>
-        <li>Book tickets</li>
-        <li>Get fare estimates</li>
-    </ul>
-{% endblock %}
+        <main>
+            <section id="routes-section">
+                <h2>Available Bus Routes</h2>
+                <div id="routes-container">
+                    <!-- Routes will be loaded here by JavaScript -->
+                    <p>Loading routes...</p>
+                </div>
+            </section>
+
+            <div class="action-sections">
+                <section id="availability-section">
+                    <h2>Check Seat Availability</h2>
+                    <form id="availability-form">
+                        <label for="avail-bus-id">Bus ID:</label>
+                        <input type="number" id="avail-bus-id" required>
+                        <button type="submit">Check</button>
+                    </form>
+                    <div id="availability-result"></div>
+                </section>
+
+                <section id="book-section">
+                    <h2>Book Tickets</h2>
+                    <form id="book-form">
+                        <label for="book-bus-id">Bus ID:</label>
+                        <input type="number" id="book-bus-id" required>
+                        
+                        <label for="num-seats">Number of Seats:</label>
+                        <input type="number" id="num-seats" min="1" required>
+                        
+                        <button type="submit">Book</button>
+                    </form>
+                    <div id="book-result"></div>
+                </section>
+
+                <section id="fare-section">
+                    <h2>Fare Estimation</h2>
+                    <form id="fare-form">
+                        <label for="fare-bus-id">Bus ID:</label>
+                        <input type="number" id="fare-bus-id" required>
+                        
+                        <label for="fare-num-seats">Number of Seats:</label>
+                        <input type="number" id="fare-num-seats" min="1" required>
+                        
+                        <button type="submit">Calculate</button>
+                    </form>
+                    <div id="fare-result"></div>
+                </section>
+            </div>
+        </main>
+    </div>
+
+    <script src="{{ url_for('static', filename='script.js') }}"></script>
+</body>
+</html>

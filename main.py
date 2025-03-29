@@ -1,7 +1,6 @@
-from flask import Flask, render_template, request, redirect, url_for, flash
+from flask import Flask, render_template, request, jsonify
 
 app = Flask(__name__)
-app.secret_key = 'your_secret_key_here'
 
 class Bus:
     def __init__(self, bus_id, route, total_seats, fare):
@@ -55,51 +54,43 @@ class TransportSystem:
 system = TransportSystem()
 
 @app.route('/')
-def home():
+def index():
     return render_template('index.html')
 
-@app.route('/routes')
-def routes():
+# API endpoints for AJAX calls
+@app.route('/api/routes')
+def get_routes():
     buses = system.view_routes()
-    return render_template('routes.html', buses=buses)
+    return jsonify([{
+        'bus_id': bus.bus_id,
+        'route': bus.route,
+        'available_seats': bus.available_seats,
+        'total_seats': bus.total_seats,
+        'fare': bus.fare
+    } for bus in buses])
 
-@app.route('/availability', methods=['GET', 'POST'])
-def availability():
-    if request.method == 'POST':
-        bus_id = int(request.form['bus_id'])
-        seats = system.check_seat_availability(bus_id)
-        if seats is not None:
-            flash(f"Available seats on Bus {bus_id}: {seats}", 'success')
-        else:
-            flash("Invalid Bus ID!", 'error')
-        return redirect(url_for('availability'))
-    return render_template('availability.html')
+@app.route('/api/check_availability', methods=['POST'])
+def check_availability():
+    data = request.get_json()
+    bus_id = int(data['bus_id'])
+    seats = system.check_seat_availability(bus_id)
+    return jsonify({'available_seats': seats})
 
-@app.route('/book', methods=['GET', 'POST'])
+@app.route('/api/book', methods=['POST'])
 def book():
-    if request.method == 'POST':
-        bus_id = int(request.form['bus_id'])
-        num_seats = int(request.form['num_seats'])
-        success = system.book_ticket(bus_id, num_seats)
-        if success:
-            flash(f"{num_seats} seat(s) on Bus {bus_id} booked successfully!", 'success')
-        else:
-            flash("Booking failed. Not enough seats or invalid Bus ID.", 'error')
-        return redirect(url_for('book'))
-    return render_template('book.html')
+    data = request.get_json()
+    bus_id = int(data['bus_id'])
+    num_seats = int(data['num_seats'])
+    success = system.book_ticket(bus_id, num_seats)
+    return jsonify({'success': success})
 
-@app.route('/fare', methods=['GET', 'POST'])
+@app.route('/api/fare', methods=['POST'])
 def fare():
-    if request.method == 'POST':
-        bus_id = int(request.form['bus_id'])
-        num_seats = int(request.form['num_seats'])
-        fare = system.get_fare_estimate(bus_id, num_seats)
-        if fare is not None:
-            flash(f"Estimated fare for {num_seats} seat(s) on Bus {bus_id}: Rs{fare}", 'success')
-        else:
-            flash("Invalid Bus ID!", 'error')
-        return redirect(url_for('fare'))
-    return render_template('fare.html')
+    data = request.get_json()
+    bus_id = int(data['bus_id'])
+    num_seats = int(data['num_seats'])
+    fare = system.get_fare_estimate(bus_id, num_seats)
+    return jsonify({'fare': fare})
 
 if __name__ == '__main__':
     app.run(debug=True)
