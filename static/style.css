@@ -4,13 +4,16 @@ body {
   margin: 0;
   padding: 0;
   color: #333;
-  background-color: #f8f9fa;
+  background-color: #f4f7f9;
 }
 
 .container {
   max-width: 1000px;
-  margin: 0 auto;
+  margin: 20px auto;
   padding: 20px;
+  background: white;
+  border-radius: 10px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 header {
@@ -20,27 +23,22 @@ header {
   color: white;
   padding: 20px;
   border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
 }
 
 header h1 {
   margin: 0;
-  font-size: 2rem;
+  font-size: 2.2rem;
+  letter-spacing: 1px;
 }
 
 main {
-  background: white;
   padding: 30px;
-  border-radius: 8px;
-  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
-}
-
-#bus-list-section {
-  margin-bottom: 40px;
 }
 
 #bus-list-section h2 {
   color: #2c3e50;
-  border-bottom: 2px solid #3498db;
+  border-bottom: 3px solid #3498db;
   padding-bottom: 10px;
 }
 
@@ -48,7 +46,7 @@ main {
   width: 100%;
   border-collapse: collapse;
   margin-top: 15px;
-  box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 #buses-table th, #buses-table td {
@@ -64,11 +62,11 @@ main {
 }
 
 #buses-table tr:hover {
-  background-color: #f5f5f5;
+  background-color: #ecf0f1;
 }
 
 .booking-process {
-  border-top: 2px solid #eee;
+  border-top: 3px solid #eee;
   padding-top: 30px;
 }
 
@@ -99,8 +97,8 @@ label {
 input {
   width: 100%;
   padding: 12px;
-  border: 1px solid #ddd;
-  border-radius: 4px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
   font-size: 16px;
   box-sizing: border-box;
 }
@@ -110,17 +108,18 @@ button {
   color: white;
   border: none;
   padding: 12px 24px;
-  border-radius: 4px;
+  border-radius: 5px;
   cursor: pointer;
   font-size: 16px;
   margin-right: 10px;
   transition: all 0.3s;
   font-weight: 600;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
 }
 
 button:hover {
   background-color: #2980b9;
-  transform: translateY(-1px);
+  transform: translateY(-2px);
 }
 
 #confirm-booking {
@@ -136,7 +135,7 @@ button:hover {
   padding: 20px;
   background-color: #f8f9fa;
   border-radius: 6px;
-  border-left: 4px solid #3498db;
+  border-left: 5px solid #3498db;
 }
 
 #bus-info h3 {
@@ -156,9 +155,10 @@ button:hover {
   padding: 25px;
   background-color: #e8f8f0;
   border-radius: 6px;
-  border-left: 4px solid #2ecc71;
+  border-left: 5px solid #2ecc71;
   margin-bottom: 25px;
   font-size: 1.1rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
 .error-message {
@@ -168,15 +168,21 @@ button:hover {
   background-color: #fdedec;
   border-radius: 6px;
   font-weight: 600;
+  border-left: 5px solid #e74c3c;
 }
 
 @media (max-width: 768px) {
   .container {
-      padding: 10px;
+      padding: 15px;
   }
   
   #buses-table {
       display: block;
       overflow-x: auto;
+  }
+  
+  button {
+      width: 100%;
+      margin-top: 10px;
   }
 }

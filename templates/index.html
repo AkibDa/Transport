@@ -24,8 +24,7 @@
                             <th>Fare per Seat (Rs)</th>
                         </tr>
                     </thead>
-                    <tbody id="buses-list">
-                    </tbody>
+                    <tbody id="buses-list"></tbody>
                 </table>
             </section>
 
@@ -33,10 +32,8 @@
                 <section id="step1" class="active-step">
                     <h2>Start Booking</h2>
                     <form id="check-bus-form">
-                        <div class="form-group">
-                            <label for="bus-id">Enter Bus ID from the list above:</label>
-                            <input type="number" id="bus-id" required>
-                        </div>
+                        <label for="bus-id">Enter Bus ID:</label>
+                        <input type="number" id="bus-id" required>
                         <button type="submit">Check Availability</button>
                     </form>
                     <div id="bus-info" class="hidden">
@@ -51,10 +48,8 @@
                 <section id="step2" class="hidden">
                     <h2>Book Tickets</h2>
                     <form id="booking-form">
-                        <div class="form-group">
-                            <label for="num-seats">Number of Seats:</label>
-                            <input type="number" id="num-seats" min="1" required>
-                        </div>
+                        <label for="num-seats">Number of Seats:</label>
+                        <input type="number" id="num-seats" min="1" required>
                         <div id="fare-display" class="hidden">
                             <p><strong>Total Fare:</strong> Rs<span id="total-fare">0</span></p>
                         </div>
