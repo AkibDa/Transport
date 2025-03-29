@@ -40,14 +40,6 @@ This project provides a user-friendly, single-page web application for managing 
     * Get fare estimates.
 5.  All actions are performed without page reloads, providing a seamless user experience.
 
-## Installation and Backend Setup (if applicable)
-
-* If you have a backend, please provide instructions on how to set it up and run it.
-* Example:
-    1.  Navigate to the backend directory: `cd backend`
-    2.  Install dependencies: `pip install -r requirements.txt`
-    3.  Run the backend server: `python app.py`
-
 ## Contributing
 
 Contributions are welcome! If you'd like to improve this project, please follow these steps:
